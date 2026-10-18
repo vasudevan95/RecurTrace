@@ -49,3 +49,7 @@ An AOF replay problem with parameterized graph queries was observed on the pinne
 ## Submission documentation check — October 18, 2026
 
 After documenting the track, graph model, runtime queries, and AI coding-assistance disclosure, all 16 automated tests passed again against local FalkorDB (one existing Starlette deprecation warning). Query examples were extracted from the actual graph implementation. This was an agent-run automated check; browser flows were not rerun for this documentation-only update. The working demo video and participant personal review remain pending.
+
+## Recorded browser demonstration — October 18, 2026
+
+A fresh Playwright browser recording captured live FalkorDB graph navigation, incident retrieval, local qwen2.5:7b retrieval-tool use, and Pyodide execution. Original and corrected implementations passed both baseline and incident checks; the proposed implementation passed its two baseline checks and failed its incident check. The generated test download completed. The 121.8-second H.264 MP4 was inspected for readable captions and visible tool/test results and published in the demo-v1 GitHub release. Captions were added after recording; no execution results were modified. This supersedes the earlier pending-video status; participant personal review remains unverified.

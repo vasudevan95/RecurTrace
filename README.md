@@ -10,7 +10,7 @@ RecurTrace connects a Python change to documented incident contracts in **Falkor
 
 The optional review agent calls `retrieve_incident_memory` to obtain connected evidence from FalkorDB before explaining a change. The deterministic workflow selects confirmed regression cases and generates executable checks; the user starts their browser execution. The model does not autonomously fix code or claim test results.
 
-**Demo video: pending recording and upload.** The [illustrated walkthrough](docs/VISUAL-DEMO.html) and [recording script](docs/DEMO-SCRIPT.md) are supporting materials, not a working-project video. See the [submission checklist](docs/SUBMISSION.md) for remaining requirements. Public hosting is not configured; complete local setup is provided below.
+**[Working demo video (2 minutes, captioned)](https://github.com/vasudevan95/RecurTrace/releases/tag/demo-v1).** Download the MP4 from the release assets; it has embedded captions and no voice-over. The [illustrated walkthrough](docs/VISUAL-DEMO.html) and [recording script](docs/DEMO-SCRIPT.md) are supporting materials, not a working-project video. See the [submission checklist](docs/SUBMISSION.md) for remaining requirements. Public hosting is not configured; complete local setup is provided below.
 
 ## AI coding-assistance disclosure
 
