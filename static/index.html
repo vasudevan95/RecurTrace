@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Turn past outages into regression checks. Trace the evidence, test the change, prevent the repeat.">
+  <title>RecurTrace — Never repeat the incident.</title>
+  <link rel="icon" href="/static/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/styles.css?v=1.0.1">
+  <script src="/static/app.js?v=1.0.1" defer></script>
+</head>
+<body>
+  <a href="#main" class="skip">Skip to content</a>
+  <aside class="sidebar">
+    <a href="#overview" class="brand"><img src="/static/mark.svg" alt="" width="33" height="33">Recur<span>Trace</span></a>
+    <div class="workspace"><span class="workspace-icon">R</span><div>Demo workspace<small>Incident intelligence</small></div><span class="subtle">⌄</span></div>
+    <div class="nav-label">WORKSPACE</div>
+    <nav aria-label="Main navigation">
+      <a href="#overview" data-nav="overview"><span class="nav-icon">◫</span>Overview</a>
+      <a href="#analyze" data-nav="analyze"><span class="nav-icon">⌘</span>Analyze a change<span class="nav-pill">NEW</span></a>
+      <a href="#memory" data-nav="memory"><span class="nav-icon">▤</span>Incident memory<span id="memory-count" class="count">0</span></a>
+      <a href="#graph" data-nav="graph"><span class="nav-icon">⌁</span>Knowledge graph</a>
+      <a href="#history" data-nav="history"><span class="nav-icon">◷</span>Analysis history</a>
+    </nav>
+    <div class="nav-label learn-label">LEARN</div>
+    <nav aria-label="Help navigation"><a href="#walkthrough" data-nav="walkthrough"><span class="nav-icon">▷</span>How it works</a><a href="#settings" data-nav="settings"><span class="nav-icon">⚙</span>Setup & connections</a></nav>
+    <div class="sidebar-bottom"><div class="graph-status"><span class="status-dot" id="graph-dot"></span><span id="graph-status">Connecting to graph…</span></div><small>Built with FalkorDB</small><div class="profile"><span class="avatar">RT</span><div>Local-first demo<small>No API key required</small></div></div></div>
+  </aside>
+  <div class="shell">
+    <header class="topbar"><div><span class="crumb">Workspace</span><span class="slash">/</span><span id="breadcrumb">Overview</span></div><div class="topbar-right"><span class="mode-badge">DEMO DATA</span><a href="#walkthrough">Take a tour <span aria-hidden="true">↗</span></a></div></header>
+    <main id="main" tabindex="-1"><div class="loading-panel">Connecting to your workspace…</div></main>
+    <footer><span>RecurTrace <span class="muted">/</span> Turn hindsight into a test.</span><span>Graph-backed evidence. Executed checks.</span></footer>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <dialog id="incident-dialog" aria-labelledby="incident-dialog-title"></dialog>
+</body>
+</html>

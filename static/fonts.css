@@ -1,0 +1,2 @@
+/* System fonts keep the first render fast and the demo usable without a font CDN. */
+@font-face{font-family:'Recur Sans';src:local('Segoe UI');font-weight:100 900;font-display:swap}

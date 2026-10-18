@@ -1,0 +1,30 @@
+# One explicitly free web service. No disks, paid workers, or paid databases.
+services:
+  - type: web
+    name: recurtrace
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips '*'
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: PUBLIC_DEMO
+        value: "true"
+      - key: ENABLE_AI
+        value: "false"
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: FALKORDB_HOST
+        sync: false
+      - key: FALKORDB_PORT
+        sync: false
+      - key: FALKORDB_USERNAME
+        sync: false
+      - key: FALKORDB_PASSWORD
+        sync: false
+      - key: FALKORDB_SSL
+        sync: false
+      - key: FALKORDB_GRAPH
+        value: recurtrace

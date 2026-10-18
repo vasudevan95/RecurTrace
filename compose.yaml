@@ -1,0 +1,19 @@
+services:
+  graph:
+    image: falkordb/falkordb:v4.12.0
+    ports:
+      - "127.0.0.1:6387:6379"
+    volumes:
+      - recurtrace-graph:/var/lib/falkordb/data
+    environment:
+      # RDB snapshots avoid replaying parameterized graph queries on startup.
+      REDIS_ARGS: "--appendonly no --save 1 1"
+      BROWSER: "0"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  recurtrace-graph:
