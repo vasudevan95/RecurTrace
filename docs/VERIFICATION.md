@@ -45,3 +45,7 @@ An AOF replay problem with parameterized graph queries was observed on the pinne
 - Live model extraction is not infallible: one draft nested a scalar argument incorrectly. The review form allowed correction before saving, and the prompt was clarified. Human confirmation remains required.
 - Public Render deployment has not been performed; account setup and the actual free FalkorDB Cloud offering need verification in the user's accounts.
 - Free hosting defaults to AI disabled. The tested local Ollama server is not made publicly accessible.
+
+## Submission documentation check — October 18, 2026
+
+After documenting the track, graph model, runtime queries, and AI coding-assistance disclosure, all 16 automated tests passed again against local FalkorDB (one existing Starlette deprecation warning). Query examples were extracted from the actual graph implementation. This was an agent-run automated check; browser flows were not rerun for this documentation-only update. The working demo video and participant personal review remain pending.

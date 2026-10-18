@@ -4,9 +4,30 @@
 
 RecurTrace connects a Python change to documented incident contracts in **FalkorDB**, builds regression tests from confirmed expectations, and executes those checks in the browser using **Pyodide**. The app includes a visual walkthrough and three reproducible examples.
 
+## Hackathon entry
+
+**Track: Agents That Act on Connected Data.** Repository: [vasudevan95/RecurTrace](https://github.com/vasudevan95/RecurTrace).
+
+The optional review agent calls `retrieve_incident_memory` to obtain connected evidence from FalkorDB before explaining a change. The deterministic workflow selects confirmed regression cases and generates executable checks; the user starts their browser execution. The model does not autonomously fix code or claim test results.
+
+**Demo video: pending recording and upload.** The [illustrated walkthrough](docs/VISUAL-DEMO.html) and [recording script](docs/DEMO-SCRIPT.md) are supporting materials, not a working-project video. See the [submission checklist](docs/SUBMISSION.md) for remaining requirements. Public hosting is not configured; complete local setup is provided below.
+
+## AI coding-assistance disclosure
+
+OpenAI Codex was used extensively to design and implement the backend, frontend, graph integration, tests, documentation, and setup tooling, and to execute verification checks. The participant selected the project direction, requested the implementation and revisions, specified the free-hosting constraint, and selected the publication account. This is an AI-assisted project, not a claim of independently handwritten code.
+
+The verification record describes checks performed with coding-agent assistance; it does not establish the participant's personal technical understanding. Before submitting, the participant must personally review and run the project and be able to explain the graph model, queries, architecture, and limitations. That review has not been verified here. See the [technical walkthrough](docs/TECHNICAL-WALKTHROUGH.md).
+
+This development assistance is separate from the app's optional runtime AI features. The default workflow needs no model or API key; live AI features require explicit configuration.
+
 ## Start on Windows
 
-Prerequisites: Python 3.10+ and Docker Desktop with its Linux engine running.
+Prerequisites: Python 3.10+, Git, and Docker Desktop with its Linux engine running.
+
+```powershell
+git clone https://github.com/vasudevan95/RecurTrace.git
+cd RecurTrace
+```
 
 Double-click **Start RecurTrace.cmd**, or run:
 
@@ -64,6 +85,35 @@ Browser interface ── JSON API ── FastAPI ── FalkorDB
 The server parses uploaded Python but does not execute it. Browser execution is restricted to a separate iframe/worker with no app-origin access and CSP-limited network destinations. Each execution has a 12-second limit; runtime loading has a separate deadline. This is a demonstration runner, not a general-purpose security sandbox or trusted CI attestation. Hostile memory-heavy code can still exhaust browser resources. Only run code you are authorized to inspect.
 
 No graph fallback is used: when FalkorDB is unavailable, retrieval fails clearly. Incident creation and its graph projections use one query. SQLite was intentionally removed from the hosted architecture because free Render services do not preserve local disks.
+
+## Graph data model and essential queries
+
+FalkorDB stores six node types: `Incident` (source facts and confirmed case payloads), `Function` (Python function name), `Service`, `Feature`, `Contract` (expected behavior), and `RegressionCase` (assertion and input data). Every node carries a workspace `tenant`; identifiers for shared entities include that tenant.
+
+```mermaid
+flowchart LR
+    I[Incident] -->|AFFECTED| F[Function]
+    F -->|PART_OF| S[Service]
+    S -->|SUPPORTS| B[Feature]
+    I -->|DISRUPTED| B
+    I -->|VIOLATED| C[Contract]
+    F -->|MUST_SATISFY| C
+    I -->|PREVENTED_BY| T[RegressionCase]
+```
+
+The essential retrieval query in [`GraphStore.relevant`](app/graph.py) is:
+
+```cypher
+MATCH (f:Function)-[:PART_OF]->(s:Service)
+WHERE f.tenant=$tenant AND s.name=$service AND f.name IN $functions
+MATCH (f)-[:MUST_SATISFY]->(c:Contract)<-[:VIOLATED]-(i:Incident)
+WHERE i.tenant=$tenant
+RETURN DISTINCT i.payload
+```
+
+Parameters come from the workspace and AST-detected function changes, not concatenated input. The returned incident JSON contains its confirmed regression cases. The runtime query traverses function/service/contract/incident relationships; it does **not** separately traverse `PREVENTED_BY` to load cases. Those case nodes are also stored for the graph view. This distinction matters when explaining the implementation.
+
+Removing FalkorDB removes incident storage and relationship retrieval, so historical checks cannot be selected. There is no alternate database or hardcoded retrieval fallback. The diagram is a view of the same stored graph, not the product's only graph use. [`docs/GRAPH-QUERIES.md`](docs/GRAPH-QUERIES.md) includes the actual write, retrieval, visualization, and deletion queries with their parameters.
 
 ## Supported scope
 
